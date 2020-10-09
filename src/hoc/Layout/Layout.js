@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 
 import layoutStyles from "./Layout.css";
 import Aux from "../Auxiliary/Auxiliary";

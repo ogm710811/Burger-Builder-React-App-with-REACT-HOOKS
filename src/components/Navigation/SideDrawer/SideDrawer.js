@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import sideDrawerStyles from "./SideDrawer.css";
 import Logo from "../../UI/Logo/Logo";
