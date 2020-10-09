@@ -10,7 +10,7 @@ Series solution are:
 - Serie 4. Solution using React Hooks.
 
 ## Serie in this repo
-This is the Serie 3.
+This is the Serie 4.
 
 ## Additional dependencies
 Other dependencies used in the series that make Burger Builder a full deployed App are:
