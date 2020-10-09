@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import sideDrawerStyles from "./SideDrawer.css";
 import Logo from "../../UI/Logo/Logo";
@@ -13,13 +13,13 @@ const sideDrawer = (props) => {
 
   return (
     <Aux>
-      <Backdrop showBackdrop={props.showBackdrop} clicked={props.clicked} />
-      <div className={conditionClasses.join(" ")}>
+      <Backdrop showBackdrop={props.showBackdrop} clicked={props.clicked}/>
+      <div className={conditionClasses.join(" ")} onClick={props.clicked}>
         <div className={sideDrawerStyles.Logo}>
-          <Logo />
+          <Logo/>
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isUserLoggedIn={props.isUserLoggedIn}/>
         </nav>
       </div>
     </Aux>

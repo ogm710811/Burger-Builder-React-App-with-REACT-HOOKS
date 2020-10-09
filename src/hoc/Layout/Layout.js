@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
 import layoutStyles from "./Layout.css";
 import Aux from "../Auxiliary/Auxiliary";
@@ -6,38 +6,32 @@ import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 import { connect } from "react-redux";
 
-class Layout extends Component {
-  state = {
-    showSideDrawer: false,
+const layout = ({isUserLoggedIn, children}) => {
+  const [showSideDrawer, setShowSideDrawer] = useState(false)
+
+  const showSideDrawerHandler = () => {
+    setShowSideDrawer(false)
   };
 
-  showSideDrawerHandler = () => {
-    this.setState({
-      showSideDrawer: false,
-    });
+  const sideDrawerToggleHandler = () => {
+    setShowSideDrawer(!showSideDrawer)
   };
 
-  sideDrawerToggleHandler = () => {
-    this.setState((prevState) => {
-      return { showSideDrawer: !prevState.showSideDrawer };
-    });
-  };
+  return (
+    <Aux>
+      <Toolbar
+        isUserLoggedIn={isUserLoggedIn}
+        sideDrawerToggleClicked={sideDrawerToggleHandler}
+      />
+      <SideDrawer
+        isUserLoggedIn={isUserLoggedIn}
+        showBackdrop={showSideDrawer}
+        clicked={showSideDrawerHandler}
+      />
+      <main className={layoutStyles.Content}>{children}</main>
+    </Aux>
+  );
 
-  render() {
-    return (
-      <Aux>
-        <Toolbar
-          isUserLoggedIn={this.props.isUserLoggedIn}
-          sideDrawerToggleClicked={this.sideDrawerToggleHandler}
-        />
-        <SideDrawer
-          showBackdrop={this.state.showSideDrawer}
-          clicked={this.showSideDrawerHandler}
-        />
-        <main className={layoutStyles.Content}>{this.props.children}</main>
-      </Aux>
-    );
-  }
 }
 
 const mapStateToProps = (state) => {
@@ -46,4 +40,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);
