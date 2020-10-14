@@ -2,8 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9896248-2830-40e0-a8aa-9ace0099bf35" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/http-error-handler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Burger/BurgerIngredient/BurgerIngredient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Burger/BurgerIngredient/BurgerIngredient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Burger/BurgerOrderSummary/BurgerOrderSummary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Burger/BurgerOrderSummary/BurgerOrderSummary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UI/Modal/Modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UI/Modal/Modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Authentication/Auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Authentication/Auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Authentication/Logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Authentication/Logout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/BurgerBuilder/BurgerBuilder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/BurgerBuilder/BurgerBuilder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Checkout/Checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Checkout/Checkout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Checkout/ContactData/ContactData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Checkout/ContactData/ContactData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/containers/Orders/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Orders/Orders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hoc/Layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hoc/Layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hoc/withErrorHandler/withErrorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hoc/withErrorHandler/withErrorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/sagas/contactData.effect.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/sagas/contactData.effect.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,6 +26,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1idpJoXOc7b1ac6sU1Sv8WrFhRQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -22,6 +42,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -32,7 +53,8 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="D:\projects\React Projects\burger-builder-with-react-hooks\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -43,11 +65,39 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602247254726</updated>
-      <workItem from="1602247256297" duration="1447000" />
+      <workItem from="1602247256297" duration="11697000" />
+      <workItem from="1602526874630" duration="25454000" />
+      <workItem from="1602683578701" duration="2354000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2007" y="153" width="1681" height="752" key="DiffContextDialog" timestamp="1602646263292">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2007" y="153" width="1681" height="752" key="DiffContextDialog/0.0.3840.1040@0.0.3840.1040" timestamp="1602646263292" />
+    <state x="2492" y="74" key="RollbackChangesDialog" timestamp="1602646120739">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2492" y="74" key="RollbackChangesDialog/0.0.3840.1040@0.0.3840.1040" timestamp="1602646120739" />
+    <state x="2269" y="87" key="SettingsEditor" timestamp="1602644840082">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2269" y="87" key="SettingsEditor/0.0.3840.1040@0.0.3840.1040" timestamp="1602644840082" />
+    <state x="2007" y="153" width="1681" height="752" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1602646263292">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2007" y="153" width="1681" height="752" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.3840.1040@0.0.3840.1040" timestamp="1602646263292" />
+    <state x="2467" y="100" width="757" height="690" key="find.popup" timestamp="1602647314736">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2467" y="100" width="757" height="690" key="find.popup/0.0.3840.1040@0.0.3840.1040" timestamp="1602647314736" />
+    <state x="2426" y="5" width="840" height="1034" key="search.everywhere.popup" timestamp="1602598282491">
+      <screen x="0" y="0" width="3840" height="1040" />
+    </state>
+    <state x="2426" y="5" width="840" height="1034" key="search.everywhere.popup/0.0.3840.1040@0.0.3840.1040" timestamp="1602598282491" />
   </component>
 </project>

@@ -1,45 +1,38 @@
-import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import OrderCheckoutSummary from "../../components/Order/OrderCheckoutSummary/OrderCheckoutSummary";
 import ContactData from "./ContactData/ContactData";
 
-class Checkout extends Component {
-  checkoutCancelledHandler = () => {
-    this.props.history.push("/");
+const checkout = ({history, match}) => {
+  const {ingredients} = useSelector(state => state.burgerBuilderReducer)
+  const checkoutCancelledHandler = () => {
+    history.push("/");
   };
 
-  checkoutContinueHandler = () => {
-    this.props.history.replace("/checkout/contact-data");
+  const checkoutContinueHandler = () => {
+    history.replace("/checkout/contact-data");
   };
 
-  render() {
-    let orderCheckoutSummary = <Redirect to="/" />;
-    if (this.props.ingredients) {
-      orderCheckoutSummary = (
-        <div>
-          <OrderCheckoutSummary
-            checkoutCancelled={this.checkoutCancelledHandler}
-            checkoutContinue={this.checkoutContinueHandler}
-            ingredients={this.props.ingredients}
-          />
-          <Route
-            path={this.props.match.path + "/contact-data"}
-            component={ContactData}
-          />
-        </div>
-      );
-    }
-    return orderCheckoutSummary;
+  let orderCheckoutSummary = <Redirect to="/"/>;
+  if (ingredients) {
+    orderCheckoutSummary = (
+      <div>
+        <OrderCheckoutSummary
+          checkoutCancelled={checkoutCancelledHandler}
+          checkoutContinue={checkoutContinueHandler}
+          ingredients={ingredients}
+        />
+        <Route
+          path={match.path + "/contact-data"}
+          component={ContactData}
+        />
+      </div>
+    );
   }
+  return orderCheckoutSummary;
+
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ingredients: state.burgerBuilderReducer.ingredients,
-    totalPrice: state.burgerBuilderReducer.totalPrice,
-  };
-};
-
-export default connect(mapStateToProps)(Checkout);
+export default checkout;

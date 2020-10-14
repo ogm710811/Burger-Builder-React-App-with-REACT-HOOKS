@@ -13,13 +13,13 @@ const sideDrawer = (props) => {
 
   return (
     <Aux>
-      <Backdrop showBackdrop={props.showBackdrop} clicked={props.clicked} />
-      <div className={conditionClasses.join(" ")}>
+      <Backdrop showBackdrop={props.showBackdrop} clicked={props.clicked}/>
+      <div className={conditionClasses.join(" ")} onClick={props.clicked}>
         <div className={sideDrawerStyles.Logo}>
-          <Logo />
+          <Logo/>
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isUserLoggedIn={props.isUserLoggedIn}/>
         </nav>
       </div>
     </Aux>
