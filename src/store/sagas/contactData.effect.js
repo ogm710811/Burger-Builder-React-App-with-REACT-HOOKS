@@ -10,7 +10,7 @@ export function* createNewOrderEffect(
   yield put(fromContactDataActions.createNewOrder());
   try {
     const response = yield axiosOrdersInstance.post(
-      `/orders.json?auth=${orderData.authToken}`,
+      `/orders.json?auth=${orderData.idToken}`,
       orderData.order
     );
     yield put(fromContactDataActions.createNewOrderSuccess(response.status));

@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
@@ -17,25 +17,30 @@ const Auth = React.lazy(() => {
   return import("./containers/Authentication/Auth");
 });
 
-const app = ({isUserLoggedIn, onAuthCheckSession}) => {
+const app = () => {
+  const isUserLoggedIn = useSelector(
+    (state) => state.authenticationReducer.idToken !== null
+  );
+  const dispatch = useDispatch();
+  const onAuthCheckSession = () => dispatch(authActions.authCheckSession());
   useEffect(() => {
     onAuthCheckSession();
-  }, [])
+  }, [onAuthCheckSession]);
 
   const routes = !isUserLoggedIn ? (
     <Switch>
-      <Route path="/login" render={() => <Auth />}/>
-      <Route path="/" exact component={BurgerBuilder}/>
-      <Redirect to="/"/>
+      <Route path="/login" render={(props) => <Auth {...props} />} />
+      <Route path="/" exact component={BurgerBuilder} />
+      <Redirect to="/" />
     </Switch>
   ) : (
     <Switch>
-      <Route path="/login" render={() => <Auth />}/>
-      <Route path="/logout" component={Logout}/>
-      <Route path="/checkout" render={() => <Checkout />}/>
-      <Route path="/orders" render={() => <Orders />}/>
-      <Route path="/" exact component={BurgerBuilder}/>
-      <Redirect to="/"/>
+      {/*<Route path="/login" render={(props) => <Auth {... props}/>}/>*/}
+      <Route path="/logout" component={Logout} />
+      <Route path="/checkout" render={(props) => <Checkout {...props} />} />
+      <Route path="/orders" render={(props) => <Orders {...props} />} />
+      <Route path="/" exact component={BurgerBuilder} />
+      <Redirect to="/" />
     </Switch>
   );
 
@@ -46,19 +51,6 @@ const app = ({isUserLoggedIn, onAuthCheckSession}) => {
       </Layout>
     </div>
   );
-
-}
-
-const mapStateToProps = (state) => {
-  return {
-    isUserLoggedIn: state.authenticationReducer.idToken !== null,
-  };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuthCheckSession: () => dispatch(authActions.authCheckSession()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(app);
+export default app;

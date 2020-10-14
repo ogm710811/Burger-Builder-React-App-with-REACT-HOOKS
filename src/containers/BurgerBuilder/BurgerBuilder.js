@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import Modal from "../../components/UI/Modal/Modal";
@@ -10,43 +10,52 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import axiosOrdersInstance from "../../axios/axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as burgerBuilderActions from "../../store/actions/index";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export class BurgerBuilder extends Component {
-  // what state properties will be part of the store state?
-  // ingredients, totalPrice, ingredientsLoading, hasCatchError are the properties that will be in the store state.
-  // tisOrderNowButtonClicked property is considered UI states, so is not necessary they being at the store state
-  state = {
-    isOrderNowButtonClicked: false,
-  };
+const burgerBuilder = ({ history }) => {
+  const {
+    ingredients,
+    totalPrice,
+    ingredientsLoading,
+    hasCatchError,
+  } = useSelector((state) => state.burgerBuilderReducer);
+  const isUserLoggedIn = useSelector(
+    (state) => state.authenticationReducer.idToken !== null
+  );
+  const [isOrderNowButtonClicked, setIsOrderNowButtonClicked] = useState(false);
+  const dispatch = useDispatch();
+  const onIngredientsAdded = (ingredientName) =>
+    dispatch(burgerBuilderActions.addIngredient(ingredientName));
+  const onIngredientsRemoved = (ingredientName) =>
+    dispatch(burgerBuilderActions.removeIngredient(ingredientName));
+  const onLoadIngredients = useCallback(
+    () => dispatch(burgerBuilderActions.loadIngredientsInit()),
+    []
+  );
 
-  componentDidMount() {
-    this.props.onLoadIngredients();
-  }
+  useEffect(() => {
+    onLoadIngredients();
+  }, [onLoadIngredients]);
 
-  orderNowHandler = () => {
-    if (this.props.isUserLoggedIn) {
-      this.setState({
-        isOrderNowButtonClicked: true,
-      });
+  const orderNowHandler = () => {
+    if (isUserLoggedIn) {
+      setIsOrderNowButtonClicked(true);
     } else {
-      this.props.history.push("/login");
+      history.push("/login");
     }
   };
 
-  orderCancelHandler = () => {
-    this.setState({
-      isOrderNowButtonClicked: false,
-    });
+  const orderCancelHandler = () => {
+    setIsOrderNowButtonClicked(false);
   };
 
-  orderContinueCheckout = () => {
-    this.props.history.push({
+  const orderContinueCheckout = () => {
+    history.push({
       pathname: "/checkout",
     });
   };
 
-  buttonOrderNowHandler = (ingredients) => {
+  const buttonOrderNowHandler = (ingredients) => {
     const sum = Object.keys(ingredients)
       .map((ingredientKey) => {
         return ingredients[ingredientKey];
@@ -54,105 +63,76 @@ export class BurgerBuilder extends Component {
       .reduce((sum, ingredientValue) => {
         return sum + ingredientValue;
       }, 0);
-    // this.setState({
-    //   canOrderNow: sum > 0,
-    // });
     return sum > 0;
   };
 
-  render() {
-    const disabledIngredientsInfo = {
-      ...this.props.ingredients,
-    };
-    for (let key in disabledIngredientsInfo) {
-      disabledIngredientsInfo[key] = disabledIngredientsInfo[key] <= 0;
-    }
+  const disabledIngredientsInfo = {
+    ...ingredients,
+  };
+  for (let key in disabledIngredientsInfo) {
+    disabledIngredientsInfo[key] = disabledIngredientsInfo[key] <= 0;
+  }
 
-    let burgerOrderSummary = null;
-    let burgerBuilder = this.props.hasCatchError ? (
+  let burgerOrderSummary = null;
+  let burgerBuilder = hasCatchError ? (
+    <Aux>
+      <p
+        style={{
+          whiteSpace: "pre",
+          textAlign: "center",
+          color: "red",
+          fontWeight: "bold",
+        }}
+      >
+        There was an error loading ingredients ... {"\n"}Please, try again !!
+      </p>
+    </Aux>
+  ) : (
+    <Spinner />
+  );
+
+  if (ingredients) {
+    burgerBuilder = (
       <Aux>
-        <p
-          style={{
-            whiteSpace: "pre",
-            textAlign: "center",
-            color: "red",
-            fontWeight: "bold",
-          }}
-        >
-          There was an error loading ingredients ... {"\n"}Please, try again !!
-        </p>
+        <BurgerView ingredients={ingredients} />
+        <BurgerControls
+          ingredientAdded={onIngredientsAdded}
+          ingredientRemoved={onIngredientsRemoved}
+          disabledLessButton={disabledIngredientsInfo}
+          totalPrice={totalPrice}
+          canOrderNow={buttonOrderNowHandler(ingredients)}
+          buttonClicked={orderNowHandler}
+          isUserLoggedIn={isUserLoggedIn}
+        />
       </Aux>
-    ) : (
-      <Spinner />
     );
 
-    if (this.props.ingredients) {
-      burgerBuilder = (
-        <Aux>
-          <BurgerView ingredients={this.props.ingredients} />
-          <BurgerControls
-            ingredientAdded={this.props.onIngredientsAdded}
-            ingredientRemoved={this.props.onIngredientsRemoved}
-            disabledLessButton={disabledIngredientsInfo}
-            totalPrice={this.props.totalPrice}
-            canOrderNow={this.buttonOrderNowHandler(this.props.ingredients)}
-            buttonClicked={this.orderNowHandler}
-            isUserLoggedIn={this.props.isUserLoggedIn}
-          />
-        </Aux>
-      );
-
-      burgerOrderSummary = (
-        <BurgerOrderSummary
-          ingredients={this.props.ingredients}
-          totalPrice={this.props.totalPrice}
-          clickedCancel={this.orderCancelHandler}
-          clickedContinue={this.orderContinueCheckout}
-        />
-      );
-    }
-
-    if (this.props.ingredientsLoading) {
-      burgerOrderSummary = <Spinner />;
-    }
-
-    return (
-      <Aux>
-        <Modal
-          displayModal={this.state.isOrderNowButtonClicked}
-          closeModal={this.orderCancelHandler}
-          hasSpinner={this.props.ingredientsLoading}
-        >
-          {burgerOrderSummary}
-        </Modal>
-        {burgerBuilder}
-      </Aux>
+    burgerOrderSummary = (
+      <BurgerOrderSummary
+        ingredients={ingredients}
+        totalPrice={totalPrice}
+        clickedCancel={orderCancelHandler}
+        clickedContinue={orderContinueCheckout}
+      />
     );
   }
-}
 
-const mapStateToProps = (state) => {
-  return {
-    ingredients: state.burgerBuilderReducer.ingredients,
-    totalPrice: state.burgerBuilderReducer.totalPrice,
-    ingredientsLoading: state.burgerBuilderReducer.ingredientsLoading,
-    hasCatchError: state.burgerBuilderReducer.hasCatchError,
-    isUserLoggedIn: state.authenticationReducer.idToken !== null,
-  };
+  if (ingredientsLoading) {
+    burgerOrderSummary = <Spinner />;
+  }
+
+  return (
+    <Aux>
+      <Modal
+        displayModal={isOrderNowButtonClicked}
+        closeModal={orderCancelHandler}
+        hasSpinner={ingredientsLoading}
+      >
+        {burgerOrderSummary}
+      </Modal>
+      {burgerBuilder}
+    </Aux>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onIngredientsAdded: (ingredientName) =>
-      dispatch(burgerBuilderActions.addIngredient(ingredientName)),
-    onIngredientsRemoved: (ingredientName) =>
-      dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
-    onLoadIngredients: () =>
-      dispatch(burgerBuilderActions.loadIngredientsInit()),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withErrorHandler(BurgerBuilder, axiosOrdersInstance));
+export default withErrorHandler(burgerBuilder, axiosOrdersInstance);

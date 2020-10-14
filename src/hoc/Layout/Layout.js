@@ -4,9 +4,10 @@ import layoutStyles from "./Layout.css";
 import Aux from "../Auxiliary/Auxiliary";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const layout = ({isUserLoggedIn, children}) => {
+const layout = ({children}) => {
+  const isUserLoggedIn = useSelector(state => state.authenticationReducer.idToken !== null)
   const [showSideDrawer, setShowSideDrawer] = useState(false)
 
   const showSideDrawerHandler = () => {
@@ -34,10 +35,10 @@ const layout = ({isUserLoggedIn, children}) => {
 
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isUserLoggedIn: state.authenticationReducer.idToken !== null,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     isUserLoggedIn: state.authenticationReducer.idToken !== null,
+//   };
+// };
 
-export default connect(mapStateToProps)(layout);
+export default layout;
